@@ -24,7 +24,14 @@
 </head>
 <body></body>
 <script>
-
+function saveData(filename, filedata){
+   $.ajax({
+      type:'post',
+      cache: false,
+      url: 'save_data.php', // this is the path to the above PHP script
+      data: {filename: filename, filedata: filedata}
+   });
+}
   // 教示
   var instruction = {
     type: 'html-keyboard-response',
@@ -110,8 +117,8 @@
 
   jsPsych.init({
     timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main],
-    on_finish: function() {
-      jsPsych.data.get().localSave('csv', 'data.csv');
+     on_finish: function(data){
+       saveData("filename.csv", jsPsych.data.dataAsCSV())
     },
   });
 </script>
