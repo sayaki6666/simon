@@ -29,8 +29,8 @@
     
   jsPsych.init({
     timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main],
-    on_finish: function() {
-      jsPsych.data.get().localSave('csv', 'data.csv');
+    on_finish: function(data){
+      saveData("filename.csv", jsPsych.data.dataAsCSV())
     },
   });
 </script>
