@@ -114,7 +114,7 @@ function saveData(name, data){
   }
 
   jsPsych.init({
-    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main, xhr],
+    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main],
      on_finish: function(){ 
        saveData("experiment_data", jsPsych.data.get().csv()); }
     },
