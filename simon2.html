@@ -24,12 +24,7 @@
 </head>
 <body></body>
 <script>
-function saveData(name, data){
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify({filename: name, filedata: data}));
-}
+
   // 教示
   var instruction = {
     type: 'html-keyboard-response',
@@ -112,9 +107,16 @@ function saveData(name, data){
     timeline_variables: trial_types_main,
     timeline: [trial],
   }
-
+  
+function saveData(name, data){
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({filename: name, filedata: data}));
+}
+  
   jsPsych.init({
-    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main],
+    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main, xhr],
      on_finish: function(){ 
        saveData("experiment_data", jsPsych.data.get().csv()); }
     },
