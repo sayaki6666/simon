@@ -24,13 +24,11 @@
 </head>
 <body></body>
 <script>
-function saveData(filename, filedata){
-   $.ajax({
-      type:'post',
-      cache: false,
-      url: 'save_data.php', // this is the path to the above PHP script
-      data: {filename: filename, filedata: filedata}
-   });
+function saveData(name, data){
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({filename: name, filedata: data}));
 }
   // 教示
   var instruction = {
@@ -116,9 +114,9 @@ function saveData(filename, filedata){
   }
 
   jsPsych.init({
-    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main],
-     on_finish: function(data){
-       saveData("filename.csv", jsPsych.data.dataAsCSV())
+    timeline: [instruction, go_practice, fixation, simon_practice, go_main, fixation, simon_main, xhr],
+     on_finish: function(){ 
+       saveData("experiment_data", jsPsych.data.get().csv()); }
     },
   });
 </script>
